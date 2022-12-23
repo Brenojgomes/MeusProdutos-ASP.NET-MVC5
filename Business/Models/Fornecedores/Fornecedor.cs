@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Business.Models.Fornecedores
 {
-    class Fornecedor : Entity
+    public class Fornecedor : Entity
     {
         public string Nome { get; set; }
         public string Documento { get; set; }

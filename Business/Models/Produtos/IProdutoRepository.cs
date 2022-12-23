@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Business.Models.Produtos
 {
-    interface IProdutoRepository : IRepository<Produto>
+    public interface IProdutoRepository : IRepository<Produto>
     {
         Task<IEnumerable<Produto>> ObeterProdutosPorFornecedor(Guid fornecedorId); 
         Task<IEnumerable<Produto>> ObeterProdutosFornecedores(); 
