@@ -10,9 +10,9 @@ namespace Business.Core.Models
     {
         protected Entity()
         {
-            id = Guid.NewGuid();
+            Id = Guid.NewGuid();
         }
 
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
     }
 }
