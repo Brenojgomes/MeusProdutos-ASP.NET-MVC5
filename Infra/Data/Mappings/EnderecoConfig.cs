@@ -7,7 +7,7 @@ namespace Infra.Data.Mappings
     {
         public EnderecoConfig()
         {
-            HasKey(x => x.id);
+            HasKey(x => x.Id);
 
             Property(x => x.Logradouro)
                 .IsRequired()

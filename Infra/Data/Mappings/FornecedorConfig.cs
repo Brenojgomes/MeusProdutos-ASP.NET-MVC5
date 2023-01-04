@@ -9,7 +9,7 @@ namespace Infra.Data.Mappings
     {
         public FornecedorConfig()
         {
-            HasKey(f => f.id);
+            HasKey(f => f.Id);
 
             Property(f => f.Nome)
                 .IsRequired()

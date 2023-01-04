@@ -7,7 +7,7 @@ namespace Infra.Data.Mappings
     {
         public ProdutoConfig()
         {
-            HasKey(p => p.id);
+            HasKey(p => p.Id);
 
             Property(p => p.Nome)
                 .IsRequired()

@@ -15,6 +15,7 @@ namespace Business.Models.Produtos
         public bool Ativo { get; set; }
 
         /* EF Relations */
-        public Fornecedor Fornecedor { get; set; } 
-    }
+        public Fornecedor Fornecedor { get; set; }
+
+    } 
 }
