@@ -1,4 +1,5 @@
-﻿using Business.Core.Services;
+﻿using Business.Core.Notificacoes;
+using Business.Core.Services;
 using Business.Models.Produtos.Validations;
 using System;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace Business.Models.Produtos.Services
     {
         private readonly IProdutoRepository _produtoRepository;
 
-        public ProdutoService(IProdutoRepository produtoRepository)
+        public ProdutoService(IProdutoRepository produtoRepository,INotificador notificador) : base(notificador)
         {
             _produtoRepository = produtoRepository;
         }
