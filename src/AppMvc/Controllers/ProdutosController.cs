@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using AppMvc.Models;
 using AppMvc.ViewModels;
 using Business.Models.Produtos;
 using Business.Models.Produtos.Services;
@@ -29,13 +24,15 @@ namespace AppMvc.Controllers
             _produtoService = new ProdutoService(_produtoRepository, new Notificador());
         }
 
-        // GET: Produtos
+        [Route("lista-de-produtos")]
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepository.ObterTodos()));
         }
 
-        // GET: Produtos/Details/5
+        [Route("dados-do-produto/{id:guid}")]
+        [HttpGet]
         public async Task<ActionResult> Details(Guid id)
         {
             var produtoViewModel = await ObterProduto(id);
@@ -46,15 +43,14 @@ namespace AppMvc.Controllers
             return View(produtoViewModel);
         }
 
-        // GET: Produtos/Create
+        [Route("novo-produto")]
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Produtos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Route("novo-produto")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(ProdutoViewModel produtoViewModel)
@@ -69,14 +65,11 @@ namespace AppMvc.Controllers
             return View(produtoViewModel);
         }
 
-        // GET: Produtos/Edit/5
+        [Route("editar-produto/{id:guid}")]
+        [HttpGet]
         public async Task<ActionResult> Edit(Guid id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ProdutoViewModel produtoViewModel = await ObterProduto(id);
+        {         
+            var produtoViewModel = await ObterProduto(id);
             if (produtoViewModel == null)
             {
                 return HttpNotFound();
@@ -84,9 +77,7 @@ namespace AppMvc.Controllers
             return View(produtoViewModel);
         }
 
-        // POST: Produtos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Route("editar-produto/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(ProdutoViewModel produtoViewModel)
@@ -99,14 +90,11 @@ namespace AppMvc.Controllers
             return View(produtoViewModel);
         }
 
-        // GET: Produtos/Delete/5
+        [Route("excluir-produto/{id:guid}")]
+        [HttpGet]
         public async Task<ActionResult> Delete(Guid id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ProdutoViewModel produtoViewModel = await ObterProduto(id);
+            var produtoViewModel = await ObterProduto(id);
             if (produtoViewModel == null)
             {
                 return HttpNotFound();
@@ -114,14 +102,19 @@ namespace AppMvc.Controllers
             return View(produtoViewModel);
         }
 
-        // POST: Produtos/Delete/5
+        [Route("excluir - produto /{id: guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(Guid id)
         {
-            ProdutoViewModel produtoViewModel = await ObterProduto(id);
-            db.ProdutoViewModels.Remove(produtoViewModel);
-            await db.SaveChangesAsync();
+            var produtoViewModel = await ObterProduto(id);
+
+            if (produtoViewModel == null)
+            {
+                return HttpNotFound();
+            }
+
+            await _produtoService.Remover(id);
             return RedirectToAction("Index");
         }
 
@@ -135,8 +128,10 @@ namespace AppMvc.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _produtoService.Dispose();
+                _produtoRepository.Dispose();
             }
+
             base.Dispose(disposing);
         }
     }
