@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Infra.Data.Repository
 {
-    public class ProdutosRepository : Repository<Produto>, IProdutoRepository
+    public class ProdutoRepository : Repository<Produto>, IProdutoRepository
     {
         public async Task<Produto> ObeterProdutoFornecedor(Guid id)
         {

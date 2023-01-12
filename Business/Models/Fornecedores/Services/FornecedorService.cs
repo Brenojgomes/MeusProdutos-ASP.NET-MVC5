@@ -48,7 +48,7 @@ namespace Business.Models.Fornecedores.Services
 
             if (fornecedor.Produtos.Any())
             {
-                Notificar("O fornecedor possui produtos cadastrados.")
+                Notificar("O fornecedor possui produtos cadastrados.");
                 return;
             }
 
