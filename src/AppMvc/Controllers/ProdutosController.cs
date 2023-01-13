@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Net;
 using System.Web.Mvc;
 using AppMvc.ViewModels;
 using Business.Models.Produtos;
 using Business.Models.Produtos.Services;
-using Infra.Data.Repository;
-using Business.Core.Notificacoes;
 using AutoMapper;
 
 namespace AppMvc.Controllers
@@ -18,10 +15,11 @@ namespace AppMvc.Controllers
         private readonly IProdutoService _produtoService;
         private readonly IMapper _mapper;
 
-        public ProdutosController()
+        public ProdutosController(IProdutoRepository produtoRepository, IProdutoService produtoService, IMapper mapper)
         {
-            _produtoRepository = new ProdutoRepository();
-            _produtoService = new ProdutoService(_produtoRepository, new Notificador());
+            _produtoRepository = produtoRepository;
+            _produtoService = produtoService;
+            _mapper = mapper;
         }
 
         [Route("lista-de-produtos")]
@@ -57,7 +55,7 @@ namespace AppMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                _produtoService.Adicionar(_mapper.Map<Produto>(produtoViewModel));
+                await _produtoService.Adicionar(_mapper.Map<Produto>(produtoViewModel));
 
                 return RedirectToAction("Index");
             }
@@ -84,7 +82,7 @@ namespace AppMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _produtoService.Atualizar(_mapper.Map<Produto>(produtoViewModel));
+                await _produtoService.Atualizar(_mapper.Map<Produto>(produtoViewModel)); 
                 return RedirectToAction("Index");
             }
             return View(produtoViewModel);
@@ -102,7 +100,7 @@ namespace AppMvc.Controllers
             return View(produtoViewModel);
         }
 
-        [Route("excluir - produto /{id: guid}")]
+        [Route("excluir-produto /{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(Guid id)
