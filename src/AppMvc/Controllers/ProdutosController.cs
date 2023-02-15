@@ -9,6 +9,7 @@ using AutoMapper;
 using Business.Models.Fornecedores;
 using System.Web;
 using System.IO;
+using Business.Core.Notificacoes;
 
 namespace AppMvc.Controllers
 {
@@ -19,7 +20,11 @@ namespace AppMvc.Controllers
         private readonly IFornecedorRepository _fornecedorRepository;
         private readonly IMapper _mapper;
 
-        public ProdutosController(IProdutoRepository produtoRepository, IProdutoService produtoService, IMapper mapper, IFornecedorRepository fornecedorRepository)
+        public ProdutosController(IProdutoRepository produtoRepository,
+            IProdutoService produtoService,
+            IMapper mapper,
+            IFornecedorRepository fornecedorRepository,
+            INotificador notificador) : base(notificador)
         {
             _produtoRepository = produtoRepository;
             _produtoService = produtoService;
