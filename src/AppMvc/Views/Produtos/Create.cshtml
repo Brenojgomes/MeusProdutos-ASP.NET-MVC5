@@ -1,8 +1,10 @@
 ﻿@model AppMvc.ViewModels.ProdutoViewModel
 
-{
+
+@{
     ViewBag.Title = "Novo Produto";
 }
+
 
 <h2>@ViewBag.Title </h2>
 <hr />
@@ -92,7 +94,7 @@
     <script>
         $('#produtoForm').submit(function () {
             const valor = $('#Valor').val();
-            $('#Valor').val(valor.replace(".",""));
+            $('#Valor').val(valor.replace(".", ""));
         });
 
         $("#Valor").attr("data-val-number", "Moeda em formato inválido");
