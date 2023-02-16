@@ -10,6 +10,7 @@ using Business.Models.Fornecedores;
 using System.Web;
 using System.IO;
 using Business.Core.Notificacoes;
+using AppMvc.Extensions;
 
 namespace AppMvc.Controllers
 {
@@ -51,6 +52,7 @@ namespace AppMvc.Controllers
             return View(produtoViewModel);
         }
 
+        [ClaimsAuthorize("Produto", "Adicionar")]
         [Route("novo-produto")]
         [HttpGet]
         public async Task<ActionResult> Create()
@@ -60,6 +62,7 @@ namespace AppMvc.Controllers
             return View(produtoViewModel);
         }
 
+        [ClaimsAuthorize("Produto", "Adicionar")]
         [Route("novo-produto")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -80,6 +83,7 @@ namespace AppMvc.Controllers
 
         }
 
+        [ClaimsAuthorize("Produto", "Editar")]
         [Route("editar-produto/{id:guid}")]
         [HttpGet]
         public async Task<ActionResult> Edit(Guid id)
@@ -92,6 +96,7 @@ namespace AppMvc.Controllers
             return View(produtoViewModel);
         }
 
+        [ClaimsAuthorize("Produto", "Editar")]
         [Route("editar-produto/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
